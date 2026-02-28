@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,46 +9,106 @@ const projects = [
   {
     title: "Project 01",
     image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+    category: "Strategy",
+    summary:
+      "Rediseño de experiencia para un producto de reclutamiento con foco en claridad, confianza y decisión rápida en móviles.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 02",
     image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80",
+    category: "Product Design",
+    summary:
+      "Sistema visual y arquitectura de información para acelerar descubrimiento de servicios y onboarding contextual.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 03",
     image:
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80",
+    category: "Brand Platform",
+    summary:
+      "Narrativa de marca y motion toolkit para campañas editoriales orientadas a performance y retención.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 04",
     image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+    category: "Experience",
+    summary:
+      "Dirección de interfaz para journeys complejos, combinando animación 3D, contenido y navegación progresiva.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 05",
     image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80",
+    category: "UI Systems",
+    summary:
+      "Construcción de biblioteca de componentes y patrones de contenido para equipos de marketing y producto.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 06",
     image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    category: "Creative Dev",
+    summary:
+      "Micrositio inmersivo con scroll narrativo, integración de video y elementos 3D de alto rendimiento.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 07",
     image:
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+    category: "Research",
+    summary:
+      "Investigación con usuarios y síntesis de hallazgos para definir roadmap de funcionalidades prioritarias.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80"
+    ]
   },
   {
     title: "Project 08",
     image:
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=900&q=80",
+    category: "Launch",
+    summary:
+      "Estrategia de lanzamiento digital con contenido modular para web, social y materiales de ventas.",
+    portfolio: [
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80",
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1400&q=80"
+    ]
   }
 ];
 
 export default function HomePage() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const isPanelOpen = Boolean(selectedProject);
+  const activeProject = selectedProject;
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -223,6 +283,8 @@ export default function HomePage() {
 
     const cardMeshes = [];
     const cardWrappers = [];
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
 
     function createCardMesh(texture, width = 2.2, height = 1.55) {
       const geometry = new THREE.PlaneGeometry(width, height, 18, 18);
@@ -317,6 +379,7 @@ export default function HomePage() {
         const wrapper = new THREE.Group();
         const mesh = createCardMesh(project.texture);
         const shadow = createSoftShadow();
+        mesh.userData.project = project;
 
         wrapper.add(mesh);
         if (shadow) wrapper.add(shadow);
@@ -363,13 +426,19 @@ export default function HomePage() {
       pointerX: 0,
       pointerY: 0,
       parallaxX: 0,
-      parallaxY: 0
+      parallaxY: 0,
+      downX: 0,
+      downY: 0,
+      moved: false
     };
 
     function onPointerDown(e) {
       state.isDragging = true;
       state.dragStartX = e.clientX;
       state.dragStartRotation = state.targetRotationY;
+      state.downX = e.clientX;
+      state.downY = e.clientY;
+      state.moved = false;
       container.classList.add("is-dragging");
     }
 
@@ -384,12 +453,31 @@ export default function HomePage() {
       if (!state.isDragging) return;
 
       const deltaX = e.clientX - state.dragStartX;
+      const deltaFromStart = Math.hypot(e.clientX - state.downX, e.clientY - state.downY);
+      if (deltaFromStart > 6) state.moved = true;
       const dragStrength = 0.0065;
       state.targetRotationY = state.dragStartRotation + deltaX * dragStrength;
       state.velocityY = deltaX * 0.00012;
     }
 
-    function onPointerUp() {
+    function selectProjectFromPointer(clientX, clientY) {
+      if (!cardMeshes.length) return;
+      pointer.x = (clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(cardMeshes, false);
+      if (hits.length > 0) {
+        const project = hits[0].object.userData.project;
+        if (project) {
+          setSelectedProject(project);
+        }
+      }
+    }
+
+    function onPointerUp(e) {
+      if (!state.moved && typeof e?.clientX === "number") {
+        selectProjectFromPointer(e.clientX, e.clientY);
+      }
       state.isDragging = false;
       container.classList.remove("is-dragging");
     }
@@ -554,7 +642,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main>
+    <main className={isPanelOpen ? "panel-open" : ""}>
       <div id="app" aria-label="Carrusel 3D interactivo" />
 
       <div className="ui">
@@ -575,6 +663,34 @@ export default function HomePage() {
           el cursor para un leve parallax.
         </div>
       </div>
+
+      <aside className={`project-panel ${isPanelOpen ? "is-open" : ""}`}>
+        <button
+          className="project-panel-close"
+          type="button"
+          onClick={() => setSelectedProject(null)}
+          aria-label="Cerrar panel"
+        >
+          x CLOSE
+        </button>
+
+        {activeProject ? (
+          <div className="project-panel-content">
+            <div className="project-panel-header">
+              <p>{activeProject.category}</p>
+              <h2>{activeProject.title}</h2>
+            </div>
+            <p className="project-panel-description">{activeProject.summary}</p>
+            <div className="project-panel-grid">
+              {activeProject.portfolio.map((imageUrl, index) => (
+                <article key={`${activeProject.title}-${index}`} className="project-panel-card">
+                  <img src={imageUrl} alt={`${activeProject.title} portfolio ${index + 1}`} />
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </aside>
     </main>
   );
 }
